@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video Compressor</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+<main>
+  <h1>Video Compressor</h1>
+  <p class="muted">Compress videos in your browser with FFmpeg. Your file never leaves your device.</p>
+
+  <label id="drop" class="drop">
+    <input id="file" type="file" accept="video/*,.mkv,.avi,.wmv" hidden />
+    <strong>Drop your video here</strong>
+    <span class="muted">or click to choose a video file</span>
+  </label>
+
+  <section class="card">
+    <h2>Video Information</h2>
+    <dl class="grid">
+      <dt>File</dt><dd id="i-name" class="muted">No video selected</dd>
+      <dt>Size</dt><dd id="i-size">--</dd>
+      <dt>Duration</dt><dd id="i-dur">--</dd>
+      <dt>Resolution</dt><dd id="i-res">--</dd>
+    </dl>
+  </section>
+
+  <section class="card">
+    <h2>Compression Settings</h2>
+    <div class="settings">
+      <label>Compression
+        <select id="mode">
+          <option value="best">Best Quality</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="small">Small File</option>
+        </select>
+      </label>
+      <label>Target Size (MB)
+        <input id="target" type="number" min="1" max="5000" step="1" value="20" />
+      </label>
+      <label>Resolution
+        <select id="res">
+          <option value="source">Keep Original</option>
+          <option value="1920:1080">1080p</option>
+          <option value="1280:720">720p</option>
+          <option value="854:480">480p</option>
+        </select>
+      </label>
+      <label>Frame Rate
+        <select id="fps">
+          <option value="0">Original FPS</option>
+          <option value="30" selected>30 FPS</option>
+          <option value="24">24 FPS</option>
+        </select>
+      </label>
+      <label>Audio
+        <select id="audio">
+          <option value="96" selected>96 kbps</option>
+          <option value="128">128 kbps</option>
+          <option value="64">64 kbps</option>
+          <option value="0">Mute Audio</option>
+        </select>
+      </label>
+    </div>
+    <p id="hint" class="muted"></p>
+  </section>
+
+  <section class="card">
+    <div id="status" class="muted">Ready</div>
+    <progress id="bar" max="100" value="0"></progress>
+  </section>
+
+  <div class="buttons">
+    <button id="go" class="primary" disabled>Compress Video</button>
+    <button id="cancel" disabled>Cancel</button>
+  </div>
+
+  <section id="result" class="card" hidden>
+    <h2>Result</h2>
+    <video id="preview" controls></video>
+    <p><a id="download" class="btn" download>Download compressed video</a></p>
+  </section>
+
+  <h2>FFmpeg Log</h2>
+  <pre id="log"></pre>
+</main>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
