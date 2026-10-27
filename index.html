@@ -9,7 +9,9 @@
 <body>
 <main>
   <h1>Video Compressor</h1>
-  <p class="muted">Compress videos in your browser with FFmpeg. Your file never leaves your device.</p>
+  <p class="muted">
+    Compress videos in your browser with FFmpeg. Your file never leaves your device.
+  </p>
 
   <label id="drop" class="drop">
     <input id="file" type="file" accept="video/*,.mkv,.avi,.wmv" hidden />
@@ -19,52 +21,138 @@
 
   <section class="card">
     <h2>Video Information</h2>
-    <dl class="grid">
-      <dt>File</dt><dd id="i-name" class="muted">No video selected</dd>
-      <dt>Size</dt><dd id="i-size">--</dd>
-      <dt>Duration</dt><dd id="i-dur">--</dd>
-      <dt>Resolution</dt><dd id="i-res">--</dd>
-    </dl>
+    <div class="settings">
+      <div><strong>File:</strong> <span id="i-name">No file selected</span></div>
+      <div><strong>Size:</strong> <span id="i-size">--</span></div>
+      <div><strong>Duration:</strong> <span id="i-dur">--</span></div>
+      <div><strong>Resolution:</strong> <span id="i-res">--</span></div>
+    </div>
   </section>
 
   <section class="card">
     <h2>Compression Settings</h2>
-    <div class="settings">
-      <label>Compression
-        <select id="mode">
-          <option value="best">Best Quality</option>
-          <option value="balanced" selected>Balanced</option>
-          <option value="small">Small File</option>
-        </select>
-      </label>
-      <label>Target Size (MB)
-        <input id="target" type="number" min="1" max="5000" step="1" value="20" />
-      </label>
-      <label>Resolution
-        <select id="res">
-          <option value="source">Keep Original</option>
-          <option value="1920:1080">1080p</option>
-          <option value="1280:720">720p</option>
-          <option value="854:480">480p</option>
-        </select>
-      </label>
-      <label>Frame Rate
-        <select id="fps">
-          <option value="0">Original FPS</option>
-          <option value="30" selected>30 FPS</option>
-          <option value="24">24 FPS</option>
-        </select>
-      </label>
-      <label>Audio
-        <select id="audio">
-          <option value="96" selected>96 kbps</option>
-          <option value="128">128 kbps</option>
-          <option value="64">64 kbps</option>
-          <option value="0">Mute Audio</option>
-        </select>
-      </label>
+
+    <label>Export Profile
+      <select id="profile">
+        <option value="standard" selected>Standard Compression</option>
+        <option value="tiktok">TikTok Maximum Quality</option>
+      </select>
+    </label>
+
+    <p id="profile-hint" class="muted">
+      Configure standard compression or manually customize your vertical video.
+    </p>
+
+    <div id="standard-settings">
+      <div class="settings">
+        <label>Compression
+          <select id="mode">
+            <option value="best">Best Quality</option>
+            <option value="balanced" selected>Balanced</option>
+            <option value="small">Small File</option>
+          </select>
+        </label>
+
+        <label>Target Size (MB)
+          <input id="target" type="number" min="1" max="5000"
+                 step="1" value="20" />
+        </label>
+
+        <label>Resolution
+          <select id="res">
+            <option value="source">Keep Original</option>
+            <option value="1920:1080">1080p</option>
+            <option value="1280:720">720p</option>
+            <option value="854:480">480p</option>
+          </select>
+        </label>
+
+        <label>Frame Rate
+          <select id="fps">
+            <option value="0">Original FPS</option>
+            <option value="24">24 FPS</option>
+            <option value="30" selected>30 FPS</option>
+            <option value="60">60 FPS</option>
+          </select>
+        </label>
+
+        <label>Audio
+          <select id="audio">
+            <option value="96" selected>96 kbps</option>
+            <option value="128">128 kbps</option>
+            <option value="64">64 kbps</option>
+            <option value="0">Mute Audio</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="hint" class="muted"></p>
     </div>
-    <p id="hint" class="muted"></p>
+
+    <div id="tiktok-settings" hidden>
+      <h3>TikTok Video Settings</h3>
+
+      <div class="settings">
+        <label>Resolution
+          <select id="tt-resolution">
+            <option value="1080:1920" selected>1080 × 1920</option>
+            <option value="720:1280">720 × 1280</option>
+            <option value="540:960">540 × 960</option>
+            <option value="source">Use source dimensions</option>
+          </select>
+        </label>
+
+        <label>Aspect Ratio
+          <select id="tt-aspect">
+            <option value="9:16" selected>9:16 Vertical</option>
+            <option value="original">Original Aspect Ratio</option>
+          </select>
+        </label>
+
+        <label>Frame Rate
+          <select id="tt-fps">
+            <option value="30" selected>30 FPS</option>
+            <option value="24">24 FPS</option>
+            <option value="60">60 FPS</option>
+            <option value="0">Original FPS</option>
+          </select>
+        </label>
+
+        <label>Video Quality (CRF)
+          <select id="tt-crf">
+            <option value="16">CRF 16 — Very High</option>
+            <option value="18" selected>CRF 18 — High Quality</option>
+            <option value="20">CRF 20</option>
+            <option value="23">CRF 23</option>
+            <option value="26">CRF 26 — Smaller File</option>
+          </select>
+        </label>
+
+        <label>Encoder Preset
+          <select id="tt-preset">
+            <option value="ultrafast">Ultrafast</option>
+            <option value="veryfast">Veryfast</option>
+            <option value="fast">Fast</option>
+            <option value="medium" selected>Medium</option>
+            <option value="slow">Slow</option>
+          </select>
+        </label>
+
+        <label>Audio Bitrate
+          <select id="tt-audio">
+            <option value="64">64 kbps</option>
+            <option value="96">96 kbps</option>
+            <option value="128" selected>128 kbps</option>
+            <option value="192">192 kbps</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="muted">
+        Codec: H.264 (libx264). Pixel format: yuv420p. Output: MP4 with
+        fast-start enabled. CRF controls quality, not a guaranteed file size.
+      </p>
+    </div>
   </section>
 
   <section class="card">
@@ -79,13 +167,14 @@
 
   <section id="result" class="card" hidden>
     <h2>Result</h2>
-    <video id="preview" controls></video>
+    <video id="preview" controls style="width:100%;max-height:480px"></video>
     <p><a id="download" class="btn" download>Download compressed video</a></p>
   </section>
 
   <h2>FFmpeg Log</h2>
   <pre id="log"></pre>
 </main>
+
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
